@@ -1,15 +1,36 @@
-import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { Link, NavLink } from "react-router-dom";
+import AuthContext from "../../context/AuthContext/AuthContext";
+import logo from '../../assets/job-logo.png'
 
 const Navbar = () => {
+
+    const {user,signOutUser} = useContext(AuthContext)
+
+    const handleLogOut = () => {
+        signOutUser()
+        .then(() => {
+            console.log("Successful Sign Out")
+        })
+        .catch(error => {
+            console.log("Failed to Logout")
+        })
+    }
+
     const links = (
         <>
             <li>
-                <a>Item 1</a>
+                <NavLink to='/'>Home</NavLink>
             </li>
             <li>
-                <a>Item 3</a>
+                <NavLink to='/'>Home</NavLink>
             </li>
+            <li>
+                <NavLink to='/'>Home</NavLink>
+            </li>
+            
         </>
+
     );
     return (
         <div className="navbar bg-base-100 shadow-sm">
@@ -43,14 +64,29 @@ const Navbar = () => {
                         {links}
                     </ul>
                 </div>
-                <Link to="/" className="btn btn-ghost text-xl">daisyUI</Link>
+                <Link to="/" className=" text-xl flex items-center">
+                <img src={logo} alt="" className="w-12 h-12" />
+                <p className="text-2xl font-semibold">Job Portal</p>
+                </Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">{links}</ul>
             </div>
             <div className="navbar-end">
-                <Link to='/register'>Register</Link>
-                <a className="btn">Button</a>
+
+                {
+                    user?
+                    <>
+                    <button onClick={handleLogOut}>Logout</button>
+                    </> 
+                    :
+                     <>
+                     <Link to='/register'>Register</Link>
+                     <Link to="/signIn" className="btn">Sign In</Link>
+                     </>
+                }
+
+                
             </div>
         </div>
     );
