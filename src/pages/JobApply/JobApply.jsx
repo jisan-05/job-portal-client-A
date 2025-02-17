@@ -1,10 +1,12 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useAuth from "../../hooks/useHooks";
+import Swal from "sweetalert2";
 
 const JobApply = () => {
     const { id } = useParams();
     const { user } = useAuth();
+    const navigate = useNavigate()
     // console.log(id, user)
 
     const submitJobApplication = (e) => {
@@ -22,7 +24,7 @@ const JobApply = () => {
             github,
             resume,
         };
-        fetch("http://localhost:5000/job-application", {
+        fetch("http://localhost:5000/job-applications", {
             method: "POST", // HTTP method
             headers: {
                 "Content-Type": "application/json", // Specify JSON format
@@ -30,7 +32,20 @@ const JobApply = () => {
             body: JSON.stringify(jobApplication), // Convert JS object to JSON string
         })
             .then((res) => res.json())
-            .then((data) => console.log(data));
+            .then((data) => {
+                if (data.insertedId) {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Your work has been saved",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+
+                }
+                navigate("/myApplication")
+            });
+            
     };
 
     return (
