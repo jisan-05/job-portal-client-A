@@ -1,9 +1,11 @@
 import { p } from "motion/react-client";
 import { FaDollarSign, FaLocationDot } from "react-icons/fa6";
 import { HiCurrencyBangladeshi } from "react-icons/hi";
+import { Link } from "react-router-dom";
 
 const HotJobCard = ({ job }) => {
     const {
+        _id,
         title,
         company,
         company_logo,
@@ -31,13 +33,15 @@ const HotJobCard = ({ job }) => {
                 <p>{description}</p>
                 <div className="flex flex-wrap gap-1">
                     {
-                        requirements.map(skill => <p className="border rounded text-center hover:text-blue-500">{skill}</p>)
+                        requirements.map((skill,idx) => <p key={idx} className="border rounded text-center hover:text-blue-500">{skill}</p>)
                     }
                 </div>
                 <div className="card-actions justify-end items-center flex mt-3">
                     <p className="flex items-center">Salary: {salaryRange.min}-{salaryRange.max} <HiCurrencyBangladeshi />{salaryRange.currency}</p>
                     
+                    <Link to={`jobs/${_id}`}>
                     <button className="btn btn-primary">Apply</button>
+                    </Link>
                 </div>
             </div>
         </div>
