@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import AuthContext from "../../context/AuthContext/AuthContext";
 import logo from '../../assets/job-logo.png'
+import  './Navbar.css'
 
 const Navbar = () => {
 
@@ -26,7 +27,7 @@ const Navbar = () => {
                 <NavLink to='/myApplication'>My Application</NavLink>
             </li>
             <li>
-                <NavLink to='/'>Home</NavLink>
+                <NavLink to='/addJob'>Add a Job</NavLink>
             </li>
             
         </>
@@ -77,12 +78,16 @@ const Navbar = () => {
                 {
                     user?
                     <>
-                    <button onClick={handleLogOut}>Logout</button>
+                    <button onClick={handleLogOut} className="btn bg-orange-600 text-white font-bold">Logout</button>
                     </> 
                     :
                      <>
-                     <Link to='/register'>Register</Link>
-                     <Link to="/signIn" className="btn">Sign In</Link>
+                     <Link to='/register'>
+                     <button className="btn bg-blue-600 text-white">Register</button>
+                     </Link>
+                     <Link to="/signIn">
+                     <button className="btn bg-blue-600 text-white">Sign In</button>
+                     </Link>
                      </>
                 }
 
