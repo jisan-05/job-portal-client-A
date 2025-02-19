@@ -1,17 +1,49 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import useAuth from "../../hooks/useHooks";
 
 const AddJob = () => {
-    const handleAddJob = (e) => {
-        e.preventDefault()
-        const formData = new FormData(e.target)
-        const initialData = Object.fromEntries(formData.entries())
-        console.log(initialData)
-        const {min,max,currency, ...newJob} = initialData;
-        console.log(newJob)
-        newJob.salaryRange = {min,max,currency}
-        console.log(newJob)
 
-    }
+    const {user} = useAuth();
+
+    const navigate = useNavigate()
+
+    const handleAddJob = (e) => {
+        
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const initialData = Object.fromEntries(formData.entries());
+        console.log(initialData);
+        const { min, max, currency, ...newJob } = initialData;
+        console.log(newJob);
+        newJob.salaryRange = { min, max, currency };
+        newJob.requirements = newJob.requirements.split("\n");
+        newJob.responsibilities = newJob.responsibilities.split("\n");
+        console.log(newJob);
+
+        fetch("http://localhost:5000/jobs", {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify(newJob),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                if (data.insertedId) {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Your work has been saved",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                }
+                navigate("/myApplication");
+            });
+    };
 
     return (
         <div>
@@ -48,8 +80,8 @@ const AddJob = () => {
                         <label className="label block">
                             <span className="label-text">Job Type</span>
                         </label>
-                        <select className="select select-bordered w-full border">
-                            <option disabled selected>
+                        <select defaultValue="Pick a job" className="select select-bordered w-full border">
+                            <option disabled>
                                 Pick a job
                             </option>
                             <option>Full Time</option>
@@ -62,8 +94,8 @@ const AddJob = () => {
                         <label className="label block">
                             <span className="label-text">Job Field</span>
                         </label>
-                        <select className="select select-bordered w-full border">
-                            <option disabled selected>
+                        <select defaultValue="Pick a job Field" className="select select-bordered w-full border">
+                            <option disabled>
                                 Pick a job Field
                             </option>
                             <option>Engineering</option>
@@ -97,8 +129,12 @@ const AddJob = () => {
                             />
                         </div>
                         <div className="form-control">
-                            <select name="currency" className="select select-bordered w-full border">
-                                <option disabled selected>
+                            <select
+                                name="currency"
+                                defaultValue="Currency"
+                                className="select select-bordered w-full border"
+                            >
+                                <option disabled >
                                     Currency
                                 </option>
                                 <option>BDT</option>
@@ -135,14 +171,14 @@ const AddJob = () => {
                         />
                     </div>
 
-                    {/* Job Description  */}
+                    {/* Job Reruirements  */}
                     <div className="form-control">
                         <label className="label block">
                             <span className="label-text">Job Requirements</span>
                         </label>
                         <textarea
                             className="textarea textarea-bordered w-full"
-                            name="Requirements" 
+                            name="requirements"
                             required
                             placeholder="Write Job Requirements in a new line"
                         ></textarea>
@@ -150,11 +186,13 @@ const AddJob = () => {
                     {/* Job Responsibilities  */}
                     <div className="form-control">
                         <label className="label block">
-                            <span className="label-text">Job Responsibilities</span>
+                            <span className="label-text">
+                                Job Responsibilities
+                            </span>
                         </label>
                         <textarea
                             className="textarea textarea-bordered w-full"
-                            name="Responsibilities" 
+                            name="responsibilities"
                             required
                             placeholder="Write Job Responsibilities in a new line"
                         ></textarea>
@@ -182,6 +220,7 @@ const AddJob = () => {
                         <input
                             type="text"
                             name="hr_email"
+                            defaultValue={user.email}
                             placeholder="HR Email"
                             className="input input-bordered w-full"
                             required
@@ -200,7 +239,6 @@ const AddJob = () => {
                             required
                         />
                     </div>
-
 
                     {/* Job Submit button  */}
 
