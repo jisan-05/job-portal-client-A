@@ -1,12 +1,24 @@
 import React from "react";
 
 const AddJob = () => {
+    const handleAddJob = (e) => {
+        e.preventDefault()
+        const formData = new FormData(e.target)
+        const initialData = Object.fromEntries(formData.entries())
+        console.log(initialData)
+        const {min,max,currency, ...newJob} = initialData;
+        console.log(newJob)
+        newJob.salaryRange = {min,max,currency}
+        console.log(newJob)
+
+    }
+
     return (
         <div>
             <h2 className="text-2xl">Post a new Job </h2>
 
             <div className="card bg-base-100 w-full shrink-0 shadow-2xl">
-                <form className="card-body">
+                <form className="card-body" onSubmit={handleAddJob}>
                     {/* Job Title  */}
                     <div className="form-control">
                         <label className="label block ">
@@ -85,7 +97,7 @@ const AddJob = () => {
                             />
                         </div>
                         <div className="form-control">
-                            <select className="select select-bordered w-full border">
+                            <select name="currency" className="select select-bordered w-full border">
                                 <option disabled selected>
                                     Currency
                                 </option>
@@ -116,6 +128,7 @@ const AddJob = () => {
                         </label>
                         <input
                             type="text"
+                            name="company"
                             placeholder="Company Name"
                             className="input input-bordered w-full"
                             required
@@ -146,6 +159,48 @@ const AddJob = () => {
                             placeholder="Write Job Responsibilities in a new line"
                         ></textarea>
                     </div>
+
+                    {/* HR Name  */}
+                    <div className="form-control">
+                        <label className="label block ">
+                            <span className="label-text">HR Name</span>
+                        </label>
+                        <input
+                            type="text"
+                            name="hr_name"
+                            placeholder="HR Name"
+                            className="input input-bordered w-full"
+                            required
+                        />
+                    </div>
+
+                    {/* HR Email  */}
+                    <div className="form-control">
+                        <label className="label block ">
+                            <span className="label-text">HR Email</span>
+                        </label>
+                        <input
+                            type="text"
+                            name="hr_email"
+                            placeholder="HR Email"
+                            className="input input-bordered w-full"
+                            required
+                        />
+                    </div>
+                    {/* Company Logo Url  */}
+                    <div className="form-control">
+                        <label className="label block ">
+                            <span className="label-text">Company Logo Url</span>
+                        </label>
+                        <input
+                            type="text"
+                            name="company_logo"
+                            placeholder="Company Logo Url"
+                            className="input input-bordered w-full"
+                            required
+                        />
+                    </div>
+
 
                     {/* Job Submit button  */}
 
