@@ -41,7 +41,7 @@ const AddJob = () => {
                         timer: 1500,
                     });
                 }
-                navigate("/myApplication");
+                navigate("/myPostedJob");
             });
     };
 
@@ -70,6 +70,7 @@ const AddJob = () => {
                         </label>
                         <input
                             type="text"
+                            name="location"
                             placeholder="Job Location"
                             className="input input-bordered w-full"
                             required
@@ -196,6 +197,19 @@ const AddJob = () => {
                             required
                             placeholder="Write Job Responsibilities in a new line"
                         ></textarea>
+                    </div>
+
+                    {/* Application DeathLine  */}
+                    <div className="form-control">
+                        <label className="label block ">
+                            <span className="label-text">Application DeathLine</span>
+                        </label>
+                        <input
+                            type="date"
+                            name="deathline"
+                            className="input input-bordered w-full"
+                            required
+                        />
                     </div>
 
                     {/* HR Name  */}
