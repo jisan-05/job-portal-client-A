@@ -11,6 +11,7 @@ import JobApply from "./pages/JobApply/JobApply";
 import MyApplication from "./pages/MyApplication/MyApplication";
 import AddJob from "./pages/AddJob/AddJob";
 import MyPostedJob from "./pages/MyPostedJob/MyPostedJob";
+import ViewApplications from "./pages/ViewApplications/ViewApplications";
 
   const router = createBrowserRouter([
     {
@@ -42,6 +43,12 @@ import MyPostedJob from "./pages/MyPostedJob/MyPostedJob";
           path:'addJob',
           element:<PrivetRouter><AddJob></AddJob></PrivetRouter>
         },
+        {
+          path:'viewApplications/:job_id',
+          element:<PrivetRouter><ViewApplications></ViewApplications></PrivetRouter>,
+          loader: ({params}) => fetch(`http://localhost:5000/job-applications/jobs/${params.job_id}`)
+        }
+        ,
         {
           path:'myPostedJob',
           element:<PrivetRouter><MyPostedJob></MyPostedJob></PrivetRouter>
