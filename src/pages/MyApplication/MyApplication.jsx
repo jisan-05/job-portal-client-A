@@ -16,7 +16,7 @@ const MyApplication = () => {
         axios.get(`http://localhost:5000/job-application?email=${user.email}`, {withCredentials:true} )
         .then(res => setJobs(res.data))
 
-    }, []);
+    }, [user.email]);
 
     return (
         <div>
