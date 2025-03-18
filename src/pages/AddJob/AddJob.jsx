@@ -113,7 +113,7 @@ const AddJob = () => {
                                 <span className="label-text">Salary Range</span>
                             </label>
                             <input
-                                type="text"
+                                type="number"
                                 name="min"
                                 placeholder="min"
                                 className="input input-bordered w-full"
@@ -122,7 +122,7 @@ const AddJob = () => {
                         </div>
                         <div className="form-control">
                             <input
-                                type="text"
+                                type="number"
                                 name="max"
                                 placeholder="max"
                                 className="input input-bordered w-full"
@@ -233,6 +233,7 @@ const AddJob = () => {
                         </label>
                         <input
                             type="text"
+                            readOnly
                             name="hr_email"
                             defaultValue={user.email}
                             placeholder="HR Email"
